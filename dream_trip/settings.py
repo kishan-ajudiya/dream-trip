@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'dream_trip.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd32ia91lspsst4',
+        'USER': 'xrbrkahskhwuyj',
+        'PASSWORD': '25c1677e5fb8470427fd47208e1f78ac6a48bb280114e699b38b482fa1cd2a2b',
+        'HOST': 'ec2-174-129-41-127.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
