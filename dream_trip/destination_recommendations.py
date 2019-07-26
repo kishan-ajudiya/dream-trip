@@ -295,7 +295,8 @@ def sample_recommendation_user_1(user_id):
         destination = destinations_data[destination_id]
         temp_data = {'destination_id': destination_id,
                      'destination_name': destination.get('destination_name', ''),
-                     'category': destination.get('category', '')}
+                     'category': destination.get('category', ''),
+                     'image_url': destination.get('image_url', '')}
         user_records.append(temp_data)
 
     recommendation_record_list = []
