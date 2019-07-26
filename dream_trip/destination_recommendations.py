@@ -45,11 +45,18 @@ def create_interaction_matrix(df, user_col, item_col, rating_col, norm=False, th
     Expected output -
         - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
     """
+    item_dict = {}
+    df = df.fillna('')
+    for i in range(df.shape[0]):
+        item_dict[(df.loc[i, user_col])] = []
+    for i in range(df.shape[0]):
+        item_dict[(df.loc[i, user_col])].append(df.loc[i, item_col])
+
     interactions = df.groupby([user_col, item_col])[rating_col].sum().unstack().reset_index().fillna(0).set_index(
         user_col)
     if norm:
         interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
-    return interactions
+    return interactions, item_dict
 
 
 def create_user_dict(interactions):
@@ -223,10 +230,10 @@ destinations = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/destinationde
 users = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/userdetail.csv')
 
 # Creating interaction matrix using rating data
-interactions = create_interaction_matrix(df=users,
-                                         user_col='userid',
-                                         item_col='destinationid',
-                                         rating_col='rating')
+interactions, user_past_records = create_interaction_matrix(df=users,
+                                                            user_col='userid',
+                                                            item_col='destinationid',
+                                                            rating_col='rating')
 
 # Create User Dict
 user_dict = create_user_dict(interactions=interactions)
@@ -272,14 +279,21 @@ def sample_recommendation_user_1(user_id):
                                           threshold=5,
                                           nrec_items=len(destinations_dict),
                                           show=False)
-    rec_name_list = []
-    record_list = []
+    user_records = []
+    for destination_id in user_past_records.get(int(user_id), []):
+        destination = destinations_data[destination_id]
+        temp_data = {'destination_id': destination_id,
+                     'destination_name': destination.get('destination_name', ''),
+                     'category': destination.get('category', '')}
+        user_records.append(temp_data)
+
+    recommendation_record_list = []
+
     for destination_id in rec_list:
-        rec_name_list.append(destinations_dict[destination_id])
         temp_data = destinations_data[destination_id]
         temp_data['destination_id'] = destination_id
-        record_list.append(temp_data)
-    return rec_list, record_list
+        recommendation_record_list.append(temp_data)
+    return user_records, recommendation_record_list
 
 
 # [103, 117, 104, 110, 112, 111, 113, 102, 101, 107]

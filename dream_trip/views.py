@@ -133,8 +133,9 @@ class Hotels(APIView):
 class Recommendation(APIView):
     def get(self, request):
         user_id = request.GET.get('user_id', 103)
-        result, record = sample_recommendation_user_1(user_id)
-        return Response(record)
+        user_past_records, recommendations = sample_recommendation_user_1(user_id)
+        results = {'past_records': user_past_records, 'recommendations': recommendations}
+        return Response(results)
 
 
 # class Users(APIView):
