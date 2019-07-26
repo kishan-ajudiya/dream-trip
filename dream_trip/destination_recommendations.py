@@ -22,6 +22,7 @@ import pandas as pd
 from array import array
 from lightfm import *
 from lightfm.data import Dataset
+from django.conf import settings
 # Importing Libraries and cookbooks
 from recsys import *  ## recommender system cookbook
 from scipy import sparse
@@ -218,9 +219,9 @@ def item_item_recommendation(item_emdedding_distance_matrix, item_id,
 
 # In[144]:
 
+destinations = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/destinationdetail.csv')
+users = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/userdetail.csv')
 
-destinations = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/destinationdetail.csv')
-users = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/userdetail.csv')
 # Creating interaction matrix using rating data
 interactions = create_interaction_matrix(df=users,
                                          user_col='userid',
