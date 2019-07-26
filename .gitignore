@@ -1,0 +1,7 @@
+.idea/
+*.py[cob]
+*.sw[mnop]
+.idea/
+logs/
+static/thumbs
+*.log
