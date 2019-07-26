@@ -205,8 +205,8 @@ def item_item_recommendation(item_emdedding_distance_matrix, item_id,
 # In[3]:
 
 
-cities = pd.read_csv('./citydetail.csv')
-users = pd.read_csv('./userdetail.csv')
+cities = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/citydetail.csv')
+users = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/userdetail.csv')
 # Creating interaction matrix using rating data
 interactions = create_interaction_matrix(df=users,
                                          user_col='userid',
@@ -229,18 +229,20 @@ mf_model = runMF(interactions=interactions,
                  epoch=30,
                  n_jobs=4)
 
+
 # In[5]:
+def sample_recommendation_user_1(city_id):
+    rec_list = sample_recommendation_user(model=mf_model,
+                                          interactions=interactions,
+                                          user_id=5,
+                                          user_dict=user_dict,
+                                          item_dict=hotels_dict,
+                                          threshold=4,
+                                          nrec_items=10,
+                                          show=False)
+    rec_list
+    return rec_list
 
-
-rec_list = sample_recommendation_user(model=mf_model,
-                                      interactions=interactions,
-                                      user_id=5,
-                                      user_dict=user_dict,
-                                      item_dict=hotels_dict,
-                                      threshold=4,
-                                      nrec_items=10,
-                                      show=False)
-rec_list
 
 # In[6]:
 
