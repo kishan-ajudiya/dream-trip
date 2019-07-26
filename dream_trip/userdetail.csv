@@ -1,4 +1,4 @@
-userid,cityid,rating,timestamp
+userid,destinationid,rating,timestamp
 1,101,3,t1
 1,102,4,t2
 1,103,4,t3

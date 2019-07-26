@@ -205,20 +205,20 @@ def item_item_recommendation(item_emdedding_distance_matrix, item_id,
 # In[3]:
 
 
-cities = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/citydetail.csv')
+cities = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/destinationdetail.csv')
 users = pd.read_csv('/Users/tarun.bhorhari/goibibo_inventory_env/dream-trip/dream_trip/userdetail.csv')
 # Creating interaction matrix using rating data
 interactions = create_interaction_matrix(df=users,
                                          user_col='userid',
-                                         item_col='cityid',
+                                         item_col='destinationid',
                                          rating_col='rating')
 
 # Create User Dict
 user_dict = create_user_dict(interactions=interactions)
 # Create Item dict
-hotels_dict = create_item_dict(df=cities,
-                               id_col='cityid',
-                               name_col='cityname')
+destinations_dict = create_item_dict(df=cities,
+                               id_col='destinationid',
+                               name_col='destinationname')
 
 # In[4]:
 
@@ -231,17 +231,20 @@ mf_model = runMF(interactions=interactions,
 
 
 # In[5]:
-def sample_recommendation_user_1(city_id):
+def sample_recommendation_user_1(user_id):
     rec_list = sample_recommendation_user(model=mf_model,
                                           interactions=interactions,
-                                          user_id=5,
+                                          user_id=int(user_id),
                                           user_dict=user_dict,
-                                          item_dict=hotels_dict,
+                                          item_dict=destinations_dict,
                                           threshold=4,
                                           nrec_items=10,
                                           show=False)
-    rec_list
-    return rec_list
+    rec_name_list=[]
+    for destination_id in rec_list:
+        rec_name_list.append(destinations_dict[destination_id])
+
+    return rec_name_list
 
 
 # In[6]:
@@ -249,5 +252,5 @@ def sample_recommendation_user_1(city_id):
 
 # def sample_recommendation_item(model,interactions,item_id,user_dict,item_dict,number_of_user):
 rec_list = sample_recommendation_item(model=mf_model, interactions=interactions, item_id=1, user_dict=user_dict,
-                                      item_dict=hotels_dict, number_of_user=len(user_dict))
+                                      item_dict=destinations_dict, number_of_user=len(user_dict))
 rec_list
