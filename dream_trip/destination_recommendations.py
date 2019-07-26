@@ -4,7 +4,7 @@
 # In[3]:
 
 
-#!/usr/bin/env python
+# !/usr/bin/env python
 # coding: utf-8
 
 # In[1]:
@@ -68,7 +68,7 @@ def create_user_dict(interactions):
     return user_dict
 
 
-def create_item_dict(df, id_col, name_col):
+def create_item_dict(df, id_col, name_col, average_stay, lat, long, category, image_url, voyager_id):
     """
     Function to create an item dictionary based on their item_id and item name
     Required Input -
@@ -79,9 +79,16 @@ def create_item_dict(df, id_col, name_col):
         item_dict = Dictionary type output containing item_id as key and item_name as value
     """
     item_dict = {}
+    all_records = {}
+    df = df.fillna('')
     for i in range(df.shape[0]):
         item_dict[(df.loc[i, id_col])] = df.loc[i, name_col]
-    return item_dict
+        all_records[(df.loc[i, id_col])] = {'destination_name': df.loc[i, name_col],
+                                            'average_stay': df.loc[i, average_stay],
+                                            'lat': df.loc[i, lat], 'long': df.loc[i, long],
+                                            'category': df.loc[i, category],
+                                            'image_url': df.loc[i, image_url], 'voyager_id': df.loc[i, voyager_id]}
+    return item_dict, all_records
 
 
 def runMF(interactions, item_features, user_features=None, n_components=30, loss='warp', k=15, epoch=30, n_jobs=4):
@@ -223,9 +230,15 @@ interactions = create_interaction_matrix(df=users,
 # Create User Dict
 user_dict = create_user_dict(interactions=interactions)
 # Create Item dict
-destinations_dict = create_item_dict(df=destinations,
-                                     id_col='destinationid',
-                                     name_col='destinationname')
+destinations_dict, destinations_data = create_item_dict(df=destinations,
+                                                        id_col='destinationid',
+                                                        name_col='destinationname',
+                                                        average_stay='average_stay',
+                                                        lat='lat',
+                                                        long='long',
+                                                        image_url='image_url',
+                                                        category='Category',
+                                                        voyager_id='voyager_id')
 
 from lightfm.data import Dataset
 
@@ -259,9 +272,13 @@ def sample_recommendation_user_1(user_id):
                                           nrec_items=len(destinations_dict),
                                           show=False)
     rec_name_list = []
+    record_list = []
     for destination_id in rec_list:
         rec_name_list.append(destinations_dict[destination_id])
-    return rec_list
+        temp_data = destinations_data[destination_id]
+        temp_data['destination_id'] = destination_id
+        record_list.append(temp_data)
+    return rec_list, record_list
 
 
 # [103, 117, 104, 110, 112, 111, 113, 102, 101, 107]
@@ -287,12 +304,11 @@ rec_list
 # In[58]:
 
 
-#print(repr(item_features))
+# print(repr(item_features))
 
-#(interactions, weights) = dataset.build_interactions((x[0], x[1]) for i, x in users.iterrows())
+# (interactions, weights) = dataset.build_interactions((x[0], x[1]) for i, x in users.iterrows())
 
 # In[61]:
 
 
-#print(item_features)
-
+# print(item_features)
