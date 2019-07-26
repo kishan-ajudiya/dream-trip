@@ -75,19 +75,28 @@ class Experiences(APIView):
             'OAUTH-GOIBIBO': 'de94afd9abcf610773419329603a776325727968',
             'Authorization': 'Basic bW9iaWxlOnc5V2cmPDtoLWQ+WCQyag=='
         }
-        payloads = {
-            'lat': 12.9716,
-            'long': 77.5946,
-            'vcid': '2311763083662248959',
-            'sd': 1564248611,
-            'ed': 1569432611,
-            'flavour': 'android',
-            'pn': 1,
-            'ps': 50,
-            'pc': 1
-        }
-        response = requests.post(url, data=json.dumps(payloads), headers=headers)
-        return Response(response.json())
+        data = request.data.copy()
+        # payloads = {
+        #     'lat': 12.9716,
+        #     'long': 77.5946,
+        #     'vcid': '2311763083662248959',
+        #     'sd': 1564248611,
+        #     'ed': 1569432611,
+        #     'flavour': 'android',
+        #     'pn': 1,
+        #     'ps': 50,
+        #     'pc': 1
+        # }
+        response = requests.post(url, data=json.dumps(data), headers=headers)
+        response = response.json()
+        result_list = {'experiences': []}
+        experiences_data = response.get('data', {}).get('items', [])
+        for experience in experiences_data:
+            result_list['experiences'].append(
+                {'name': experience['n'], 'image_url': experience['img'], 'price': experience['sp'],
+                 'star_rating': experience['star_rating'], 'location': experience['ct']})
+        result_list['experiences'] = sorted(result_list['experiences'], key=lambda i: i['star_rating'], reverse=True)
+        return Response(result_list)
 
 
 class Hotels(APIView):
