@@ -131,7 +131,30 @@ class Recommendation(APIView):
         result, record = sample_recommendation_user_1(user_id)
         return Response(record)
 
+
 # class Users(APIView):
 #     def get(self):
 #         result = get_all_users()
 #         return Response(result)
+
+
+class Route(APIView):
+    def get(self, request):
+        response_data = []
+        origin_city = request.GET.get('origin_city')
+        destination_city = request.GET.get('destination_city')
+        url = 'http://free.rome2rio.com/api/1.4/json/Search?key=TaJdGrwg&oName=%s&dName=%s&currency=INR' % \
+              (origin_city, destination_city)
+        response = requests.get(url).json()
+        if response.get('routes'):
+            sorted_routes = sorted(response['routes'], key=lambda i: i['totalDuration'])
+            for segment in sorted_routes[0]['segments']:
+                stop = {
+                    'travel_mode': segment['segmentKind'],
+                    'from_city': response['places'][segment['depPlace']],
+                    'to_city': response['places'][segment['arrPlace']],
+                    'pricing': segment['indicativePrices'],
+                }
+                response_data.append(stop)
+
+        return Response({'data': response_data})
