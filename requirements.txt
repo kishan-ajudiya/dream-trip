@@ -1,3 +1,5 @@
+requests
+djangorestframework
 bleach==1.4.3
 dj-database-url==0.3.0
 dj-static==0.0.6
