@@ -138,12 +138,6 @@ class Recommendation(APIView):
         return Response(results)
 
 
-# class Users(APIView):
-#     def get(self):
-#         result = get_all_users()
-#         return Response(result)
-
-
 class Route(APIView):
     def get(self, request):
         response_data = []
