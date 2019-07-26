@@ -79,3 +79,14 @@ def get_trains_data(source, destination, date_of_travel):
     return response
 
 
+def get_bus_data(source, destination, date_of_travel):
+    date = date_of_travel.replace('-', '')
+    url = 'https://www.goibibo.com/bus/getsearch/v1/?flavour=v2&versioncode=mfore&application=bus&' \
+          'actionId=BusFareSearchRequest&transaction_required=123&cache=true&qtype=bus&' \
+          'rand=0.35409928687715997&vc=latest&query=bus-%s-%s-%s--1-0-0' % (source, destination, date)
+    try:
+        response = requests.get(url).json()
+    except:
+        return None
+    return response
+
