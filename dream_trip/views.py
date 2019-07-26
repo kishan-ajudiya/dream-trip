@@ -14,7 +14,7 @@ class Flights(APIView):
 
     def get(self, request):
         """
-        Return a list of all users.
+        Return a list of all flights.
         """
 
         url = "http://developer.goibibo.com/api/search/"
@@ -62,3 +62,29 @@ class Experiences(APIView):
         response = requests.post(url, data=json.dumps(payloads), headers=headers)
         return Response(response.json())
 
+
+class Hotels(APIView):
+    def get(self, request):
+        """
+        Return a list of all users.
+        """
+
+        url = "https://hermes.goibibo.com/hotels/v9/search/data/v3/6624397033787067229/20190726/20190727/3-3-0"
+
+        params = {
+            "s": "popularity",
+            "cur": "INR",
+            "f": "{}",
+            "sb": "0",
+            "ud": "Coorg",
+            "ai": "1",
+            "asi": "0",
+            "st": "voy",
+            "vt": "city",
+            "eid": "6624397033787067229",
+            "pid": "0",
+            "im": "true"
+        }
+        response = requests.get(url, params=params)
+
+        return Response(response.json())

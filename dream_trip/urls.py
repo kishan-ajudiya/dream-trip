@@ -16,10 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from dream_trip.views import Flights, Experiences
+
+from dream_trip.views import Flights, Experiences, Hotels
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^search-flights/', Flights.as_view()),
     url(r'^experiences/', Experiences.as_view()),
+    url(r'^search-hotels/', Hotels.as_view()),
+
 ]
