@@ -17,13 +17,15 @@ from django.conf.urls import url
 from django.contrib import admin
 
 
-from dream_trip.views import Flights, Experiences, Hotels
+from dream_trip.views import Flights, Experiences, Hotels, Recommendation
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^search-flights/', Flights.as_view()),
-    url(r'^experiences/', Experiences.as_view()),
+    url(r'^search-experiences/', Experiences.as_view()),
     url(r'^search-hotels/', Hotels.as_view()),
+    url(r'^search-recommendations', Recommendation.as_view())
+
 
 ]

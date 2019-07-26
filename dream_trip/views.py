@@ -6,6 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from city_recommendations import sample_recommendation_user_1
 
 
 class Flights(APIView):
@@ -111,3 +112,14 @@ class Hotels(APIView):
         response = requests.get(url, params=params)
 
         return Response(response.json())
+
+
+class Recommendation(APIView):
+
+    def get(self, request):
+        city_id = request.GET.get('city_id', 103)
+
+        import pdb
+        pdb.set_trace()
+        result = sample_recommendation_user_1(city_id)
+        return Response(result)
