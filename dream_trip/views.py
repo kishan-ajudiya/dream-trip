@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from destination_recommendations import sample_recommendation_user_1
+from destination_recommendations import sample_recommendation_user_1, get_all_users
 
 
 class Flights(APIView):
@@ -164,3 +164,9 @@ class Route(APIView):
                 response_data.append(stop)
 
         return Response({'data': response_data})
+
+
+class Users(APIView):
+    def get(self, request):
+        all_users = get_all_users()
+        return Response(all_users)

@@ -20,9 +20,9 @@
 import numpy as np
 import pandas as pd
 from array import array
+from django.conf import settings
 from lightfm import *
 from lightfm.data import Dataset
-from django.conf import settings
 # Importing Libraries and cookbooks
 from recsys import *  ## recommender system cookbook
 from scipy import sparse
@@ -32,7 +32,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # from IPython.display import HTML ## Setting display options for Ipython Notebook
 
 
-def create_interaction_matrix(df, user_col, item_col, rating_col, norm=False, threshold=None):
+def create_interaction_matrix(df, user_col, item_col, rating_col, norm=False, threshold=None, user_name=''):
     """
     Function to create an interaction matrix dataframe from transactional type interactions
     Required Input -
@@ -46,17 +46,21 @@ def create_interaction_matrix(df, user_col, item_col, rating_col, norm=False, th
         - Pandas dataframe with user-item interactions ready to be fed in a recommendation algorithm
     """
     item_dict = {}
+    user_data = {}
     df = df.fillna('')
     for i in range(df.shape[0]):
         item_dict[(df.loc[i, user_col])] = []
     for i in range(df.shape[0]):
+        item_dict[(df.loc[i, user_col])] = []
+        user_data[(df.loc[i, user_col])] = df.loc[i, user_name]
         item_dict[(df.loc[i, user_col])].append(df.loc[i, item_col])
 
     interactions = df.groupby([user_col, item_col])[rating_col].sum().unstack().reset_index().fillna(0).set_index(
         user_col)
     if norm:
         interactions = interactions.applymap(lambda x: 1 if x > threshold else 0)
-    return interactions, item_dict
+    user_record = {'user_past_records': item_dict, 'all_records': user_data}
+    return interactions, user_record
 
 
 def create_user_dict(interactions):
@@ -230,10 +234,13 @@ destinations = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/destinationde
 users = pd.read_csv(settings.BASE_DIR + '/dream_trip/static/userdetail.csv')
 
 # Creating interaction matrix using rating data
-interactions, user_past_records = create_interaction_matrix(df=users,
-                                                            user_col='userid',
-                                                            item_col='destinationid',
-                                                            rating_col='rating')
+interactions, user_json = create_interaction_matrix(df=users,
+                                                    user_col='userid',
+                                                    item_col='destinationid',
+                                                    rating_col='rating',
+                                                    user_name='username')
+user_past_records = user_json['user_past_records']
+user_all_records = user_json['all_records']
 
 # Create User Dict
 user_dict = create_user_dict(interactions=interactions)
@@ -268,6 +275,10 @@ mf_model = runMF(interactions=interactions, item_features=item_features, user_fe
                  loss='warp',
                  epoch=30,
                  n_jobs=4)
+
+
+def get_all_users():
+    return user_all_records
 
 
 def sample_recommendation_user_1(user_id):
