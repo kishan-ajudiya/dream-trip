@@ -36,7 +36,7 @@ class Flights(APIView):
                   }
         response = requests.get(url, params=params)
         resp = []
-        if response.status_code:
+        if response.status_code == 200:
             response_data = response.json().get("data", {}).get("onwardflights", [])
             response_data = [d for d in response_data if d['stops'] in ["0", ""]]
             for obj in response_data:
@@ -110,16 +110,24 @@ class Hotels(APIView):
             "im": "true"
         }
         response = requests.get(url, params=params)
-
-        return Response(response.json())
+        resp = []
+        if response.status_code == 200:
+            response_data = response.json().get("data", [])
+            for obj in response_data:
+                data_dict = {
+                    "hotel_name": obj.get("hn", ""),
+                    "star_rating": obj.get("gr", ""),
+                    "image_url": obj.get("t", ""),
+                    "price": obj.get("opr", ""),
+                    "rating_count": obj.get("grc", ""),
+                    "badge": obj.get("bt", "")
+                }
+                resp.append(data_dict)
+        return Response(resp)
 
 
 class Recommendation(APIView):
-
     def get(self, request):
         city_id = request.GET.get('city_id', 103)
-
-        import pdb
-        pdb.set_trace()
         result = sample_recommendation_user_1(city_id)
         return Response(result)
