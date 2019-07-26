@@ -51,7 +51,6 @@ def create_interaction_matrix(df, user_col, item_col, rating_col, norm=False, th
     for i in range(df.shape[0]):
         item_dict[(df.loc[i, user_col])] = []
     for i in range(df.shape[0]):
-        item_dict[(df.loc[i, user_col])] = []
         user_data[(df.loc[i, user_col])] = df.loc[i, user_name]
         item_dict[(df.loc[i, user_col])].append(df.loc[i, item_col])
 
