@@ -19,42 +19,46 @@ class Flights(APIView):
         source = request.GET.get("source", "BLR")
         destination = request.GET.get("destination", "DEL")
         dateofdeparture = request.GET.get("date_of_departure", "20191027")
-        response_data = []
-        url = "http://developer.goibibo.com/api/search/"
-        params = {"app_id": "ab0d48e9",
-                  "app_key": "7bfa0cad77827f2bb0ea03bd0ad74ecf",
-                  "format": "json",
-                  "source": source,
-                  "destination": destination,
-                  "dateofdeparture": dateofdeparture,
-                  "seatingclass": "E",
-                  "adults": "1",
-                  "children": "0",
-                  "infants": "0",
-                  "counter": "2"
-                  }
-        response = requests.get(url, params=params)
-        resp = []
-        if response.status_code == 200:
-            response_data = response.json().get("data", {}).get("onwardflights", [])
-            response_data = [d for d in response_data if d['stops'] in ["0", ""]]
-            for obj in response_data:
-                new_obj = {
-                    "fare": obj.get('fare', {}),
-                    "origin": obj.get("origin", ""),
-                    "destination": obj.get("destination", ""),
-                    "carrierid": obj.get("carrierid", ""),
-                    "flightno": obj.get("flightno", ""),
-                    "duration": obj.get("duration", ""),
-                    "airline": obj.get("airline", ""),
-                    "depdate": obj.get("depdate", ""),
-                    "deptime": obj.get("deptime", ""),
-                    "arrtime": obj.get("arrtime", ""),
-                    "arrdate": obj.get("arrdate", ""),
-                }
-                resp.append(new_obj)
-
+        resp = get_flights(source, destination, dateofdeparture)
         return Response(resp)
+
+
+def get_flights(source, destination, dateofdeparture):
+    url = "http://developer.goibibo.com/api/search/"
+    params = {"app_id": "ab0d48e9",
+              "app_key": "7bfa0cad77827f2bb0ea03bd0ad74ecf",
+              "format": "json",
+              "source": source,
+              "destination": destination,
+              "dateofdeparture": dateofdeparture,
+              "seatingclass": "E",
+              "adults": "1",
+              "children": "0",
+              "infants": "0",
+              "counter": "2"
+              }
+    response = requests.get(url, params=params)
+    resp = []
+    if response.status_code == 200:
+        response_data = response.json().get("data", {}).get("onwardflights", [])
+        response_data = [d for d in response_data if d['stops'] in ["0", ""]]
+        for obj in response_data:
+            new_obj = {
+                "fare": obj.get('fare', {}),
+                "origin": obj.get("origin", ""),
+                "destination": obj.get("destination", ""),
+                "carrierid": obj.get("carrierid", ""),
+                "flightno": obj.get("flightno", ""),
+                "duration": obj.get("duration", ""),
+                "airline": obj.get("airline", ""),
+                "depdate": obj.get("depdate", ""),
+                "deptime": obj.get("deptime", ""),
+                "arrtime": obj.get("arrtime", ""),
+                "arrdate": obj.get("arrdate", ""),
+            }
+            resp.append(new_obj)
+    sorted_resp = sorted(resp, key=lambda i: i['fare'])
+    return sorted_resp[:2]
 
 
 class Experiences(APIView):
@@ -149,6 +153,7 @@ class Route(APIView):
         response_data = []
         origin_city = request.GET.get('origin_city')
         destination_city = request.GET.get('destination_city')
+        dateofdeparture = request.GET.get("date_of_departure", "20191027")
         url = 'http://free.rome2rio.com/api/1.4/json/Search?key=TaJdGrwg&oName=%s&dName=%s&currency=INR' % \
               (origin_city, destination_city)
         response = requests.get(url).json()
@@ -162,7 +167,14 @@ class Route(APIView):
                     'pricing': segment['indicativePrices'],
                 }
                 response_data.append(stop)
-
+        for obj in response_data:
+            if obj["travel_mode"] == "air":
+                import pdb
+                pdb.set_trace()
+                source = obj["from_city"]["code"]
+                destination = obj["to_city"]["code"]
+                resp = get_flights(source, destination, dateofdeparture)
+                obj["flights"] = resp
         return Response({'data': response_data})
 
 
