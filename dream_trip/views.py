@@ -16,22 +16,45 @@ class Flights(APIView):
         """
         Return a list of all flights.
         """
-
+        source = request.GET.get("source", "BLR")
+        destination = request.GET.get("destination", "DEL")
+        dateofdeparture = request.GET.get("date_of_departure", "20191027")
+        response_data = []
         url = "http://developer.goibibo.com/api/search/"
         params = {"app_id": "ab0d48e9",
                   "app_key": "7bfa0cad77827f2bb0ea03bd0ad74ecf",
                   "format": "json",
-                  "source": "BLR",
-                  "destination": "STV",
-                  "dateofdeparture": "20191027",
+                  "source": source,
+                  "destination": destination,
+                  "dateofdeparture": dateofdeparture,
                   "seatingclass": "E",
                   "adults": "1",
                   "children": "0",
                   "infants": "0",
-                  "counter": "100"}
+                  "counter": "2"
+                  }
         response = requests.get(url, params=params)
+        resp = []
+        if response.status_code:
+            response_data = response.json().get("data", {}).get("onwardflights", [])
+            response_data = [d for d in response_data if d['stops'] in ["0", ""]]
+            for obj in response_data:
+                new_obj = {
+                    "fare": obj.get('fare', {}),
+                    "origin": obj.get("origin", ""),
+                    "destination": obj.get("destination", ""),
+                    "carrierid": obj.get("carrierid", ""),
+                    "flightno": obj.get("flightno", ""),
+                    "duration": obj.get("duration", ""),
+                    "airline": obj.get("airline", ""),
+                    "depdate": obj.get("depdate", ""),
+                    "deptime": obj.get("deptime", ""),
+                    "arrtime": obj.get("arrtime", ""),
+                    "arrdate": obj.get("arrdate", ""),
+                }
+                resp.append(new_obj)
 
-        return Response(response.json())
+        return Response(resp)
 
 
 class Experiences(APIView):
@@ -66,7 +89,7 @@ class Experiences(APIView):
 class Hotels(APIView):
     def get(self, request):
         """
-        Return a list of all users.
+        Return a list of all hotels.
         """
 
         url = "https://hermes.goibibo.com/hotels/v9/search/data/v3/6624397033787067229/20190726/20190727/3-3-0"
