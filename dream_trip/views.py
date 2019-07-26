@@ -1,12 +1,11 @@
 import json
-
 import requests
-
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from city_recommendations import sample_recommendation_user_1
+
+from destination_recommendations import sample_recommendation_user_1
 
 
 class Flights(APIView):
@@ -131,3 +130,8 @@ class Recommendation(APIView):
         user_id = request.GET.get('user_id', 103)
         result = sample_recommendation_user_1(user_id)
         return Response(result)
+
+# class Users(APIView):
+#     def get(self):
+#         result = get_all_users()
+#         return Response(result)

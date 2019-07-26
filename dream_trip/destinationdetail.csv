@@ -1,4 +1,4 @@
-cityid,cityname,Citytf-idf,average_stay,lat,long,image_url,Category,voyager_id
+destinationid,destinationname,Destination-tf-idf,average_stay,lat,long,image_url,Category,voyager_id
 101,Delhi,14,3,,,,Business,
 102,Mumbai,12,4,,,,Business,
 103,Bangalore,12,3,,,,Business,
