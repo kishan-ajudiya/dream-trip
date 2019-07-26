@@ -290,7 +290,8 @@ def sample_recommendation_user_1(user_id):
                                           nrec_items=len(destinations_dict),
                                           show=False)
     user_records = []
-    for destination_id in user_past_records.get(int(user_id), []):
+    user_past_destinations = user_past_records.get(int(user_id), [])
+    for destination_id in user_past_destinations:
         destination = destinations_data[destination_id]
         temp_data = {'destination_id': destination_id,
                      'destination_name': destination.get('destination_name', ''),
@@ -301,9 +302,10 @@ def sample_recommendation_user_1(user_id):
     recommendation_record_list = []
 
     for destination_id in rec_list:
-        temp_data = destinations_data[destination_id]
-        temp_data['destination_id'] = destination_id
-        recommendation_record_list.append(temp_data)
+        if destination_id not in user_past_destinations:
+            temp_data = destinations_data[destination_id]
+            temp_data['destination_id'] = destination_id
+            recommendation_record_list.append(temp_data)
     return user_records, recommendation_record_list
 
 
