@@ -1,19 +1,11 @@
-userid,destinationid,rating,timestamp
-1,101,3,t1
-1,102,4,t2
-1,103,4,t3
-2,103,5,t4
-2,104,5,t5
-2,110,4,t6
-2,111,5,t7
-2,112,4,t8
-2,113,3,t9
-2,117,3,t10
-3,101,4,t11
-4,102,2,t12
-4,103,5,t13
-5,106,2,t14
-5,101,3,t15
-5,102,1,t16
-5,107,5,t17
-5,108,5,t18
+userid,cityid,rating,timestamp,age,username
+1,104,5,t1,20,Vikalp Sahni
+1,115,1,t2,22,Vikalp Sahni
+2,107,2,t4,29,Omify
+2,105,5,t5,28,Omify
+3,115,5,t11,20,Rahul Goyal
+4,111,2,t12,40,Keshav Agarwal
+4,115,2,t13,50,Keshav Agarwal
+5,107,5,t14,20,Tarun Bhorhari
+5,106,5,t15,20,Tarun Bhorhari
+5,114,5,t15,20,Tarun Bhorhari
