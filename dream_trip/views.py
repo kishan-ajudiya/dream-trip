@@ -91,20 +91,23 @@ class Hotels(APIView):
         """
         Return a list of all hotels.
         """
-
-        url = "https://hermes.goibibo.com/hotels/v9/search/data/v3/6624397033787067229/20190726/20190727/3-3-0"
+        city_code = request.GET.get("city_code", "6624397033787067229")
+        checkin_date = request.GET.get("checkin_date", "20191026")
+        checkout_date = request.GET.get("checkout_date", "20191027")
+        url = "https://hermes.goibibo.com/hotels/v9/search/data/v3/" + city_code + "/" + checkin_date + "/" \
+              + checkout_date + "/1-1-0"
 
         params = {
             "s": "popularity",
             "cur": "INR",
             "f": "{}",
             "sb": "0",
-            "ud": "Coorg",
+            "ud": "",
             "ai": "1",
             "asi": "0",
             "st": "voy",
             "vt": "city",
-            "eid": "6624397033787067229",
+            "eid": city_code,
             "pid": "0",
             "im": "true"
         }
@@ -119,7 +122,9 @@ class Hotels(APIView):
                     "image_url": obj.get("t", ""),
                     "price": obj.get("opr", ""),
                     "rating_count": obj.get("grc", ""),
-                    "badge": obj.get("bt", "")
+                    "badge": obj.get("bt", ""),
+                    "location": obj.get("l", ""),
+                    "info": obj.get("ut", "")
                 }
                 resp.append(data_dict)
         return Response(resp)
