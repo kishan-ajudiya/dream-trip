@@ -16,20 +16,18 @@ class Flights(APIView):
         """
         Return a list of all users.
         """
-        url = "https://thor.goibibo.com/v1/thor/rest/flight/search/max"
-        params = {
-            "multi": "n",
-            "transaction_required": False,
-            "cache": False,
-            "userid": 156,
-            "actionData": [{"query": "air-BLR-DEL-20190903--1-0-0-E-0--"}],
-            "application": "b2b",
-            "actionId": "AirFareSearchRequest",
-            "flavour": "api",
-            "qtype": "fbs"}
-        params["actionData"] = json.dumps(params["actionData"])
+        url = "http://developer.goibibo.com/api/search/"
+        params = {"app_id": "ab0d48e9",
+                  "app_key": "7bfa0cad77827f2bb0ea03bd0ad74ecf",
+                  "format": "json",
+                  "source": "BLR",
+                  "destination": "STV",
+                  "dateofdeparture": "20191027",
+                  "seatingclass": "E",
+                  "adults": "1",
+                  "children": "0",
+                  "infants": "0",
+                  "counter": "100"}
         response = requests.get(url, params=params)
 
         return Response(response.json())
-
-
