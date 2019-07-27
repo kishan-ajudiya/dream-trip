@@ -79,7 +79,7 @@ def create_user_dict(interactions):
     return user_dict
 
 
-def create_item_dict(df, id_col, name_col, average_stay, lat, long, category, image_url, voyager_id):
+def create_item_dict(df, id_col, name_col, average_stay, lat, long, category, image_url, voyager_id, airport_code):
     """
     Function to create an item dictionary based on their item_id and item name
     Required Input -
@@ -98,7 +98,8 @@ def create_item_dict(df, id_col, name_col, average_stay, lat, long, category, im
                                             'average_stay': df.loc[i, average_stay],
                                             'lat': df.loc[i, lat], 'long': df.loc[i, long],
                                             'category': df.loc[i, category],
-                                            'image_url': df.loc[i, image_url], 'voyager_id': df.loc[i, voyager_id]}
+                                            'image_url': df.loc[i, image_url], 'voyager_id': str(df.loc[i, voyager_id]),
+                                            'airport_code': df.loc[i, airport_code]}
     return item_dict, all_records
 
 
@@ -252,7 +253,8 @@ destinations_dict, destinations_data = create_item_dict(df=destinations,
                                                         long='long',
                                                         image_url='image_url',
                                                         category='Category',
-                                                        voyager_id='voyager_id')
+                                                        voyager_id='voyager_id',
+                                                        airport_code='airport_code')
 
 from lightfm.data import Dataset
 

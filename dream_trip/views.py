@@ -63,7 +63,7 @@ def get_flights(source, destination, dateofdeparture):
 
 class Experiences(APIView):
 
-    def post(self, request):
+    def get(self, request):
         """
         :param request:
         :return: Return a list of experience near by 50 KM ranges
@@ -87,7 +87,7 @@ class Experiences(APIView):
         #     'ps': 50,
         #     'pc': 1
         # }
-        
+
         data["sd"] = 1564248611
         data["ed"] = 1569432611
 
@@ -112,7 +112,7 @@ class Hotels(APIView):
         checkin_date = request.GET.get("checkin_date", "20191026")
         checkout_date = request.GET.get("checkout_date", "20191027")
         url = "https://hermes.goibibo.com/hotels/v9/search/data/v3/" + city_code + "/" + checkin_date + "/" \
-              + checkout_date + "/1-1-0"
+              + checkout_date + "/1-2-0"
 
         params = {
             "s": "popularity",

@@ -1,17 +1,17 @@
-destinationid,destinationname,Destination-tf-idf,average_stay,lat,long,image_url,Category,voyager_id
-101,Delhi,14,3,1,2,https://www.tourtravelogy.com/wp-content/uploads/2016/10/reddfort.jpg,Business,
-102,Mumbai,12,4,1,2,https://i.pinimg.com/originals/11/00/40/110040c9c0db08c56328cbf00ebc82e1.jpg,Business,
-103,Bangalore,12,3,1,2,https://image3.mouthshut.com/images/Restaurant/Photo/-81988_8621.jpg,Business,
-104,Bankok,26,2,1,2,https://wallpapercave.com/wp/wp2387116.jpg,Leisure,
-105,Phuket,25,4,1,2,https://i.ytimg.com/vi/WQVO76h-p7Q/maxresdefault.jpg,Leisure,
-106,Goa,35,2,1,2,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShrxEpUOY5ZstlPyz4GVes2fAnFDNYilIQ3UeCR-1_1ABCejpK,Beach,
-107,Jaipur,24,3,1,2,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4qYCt4gD_Yu-5So1Pz1DubB0xVrYu1GMga-pFLUq_n23DmHDH,Leisure,
-108,Chennai,11,4,1,2,https://pix10.agoda.net/geo/city/17269/1_17269_02.jpg?s=1920x822,Business,
-109,Jammu And Kashmir,43,2,1,2,https://i.ytimg.com/vi/GQKDnK-spQs/maxresdefault.jpg,Religious,
-110,Mysore,13,5,1,2,https://image3.mouthshut.com/images/imagesp/925753485s.jpg,Business,
-111,Colombo,24,5,1,2,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrvA0xcMUrSOxloWLuIVTnKi3wfL5IgkwuBJd2kO9nxkixoc74,Leisure,
-112,Kochi,23,3,1,2,http://static.asiawebdirect.com/m/kl/portals/india-hotel-net/homepage/kochi/pagePropertiesImage/cochin.jpg.jpg,Leisure,
-113,Philipines,27,3,1,2,https://sgp1.digitaloceanspaces.com/tz-mag-ph/wp-content/uploads/2017/06/20091804/palawan-island-philippines-hd-wallpaper.jpg,Leisure,
-114,Shillong,50,3,1,2,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRccHnku6_Juq9Mc8wORcnpaoX6JwUmjEDZF_nKVvKAvn7WOxxc5Q,Hill,
-115,Haridwar,42,3,1,2,http://www.thegreatanannda.com/wp-content/themes/tga/assets/img/Hotel-Great-Ananda-Haridwar-harki-pauri.jpg,Religious,
-116,Tripuati,41,3,1,2,https://i.pinimg.com/originals/28/bc/d0/28bcd0d7e9310764a99dbb27c65cdf60.jpg,Religious,
+destinationid,destinationname,Destination-tf-idf,average_stay,lat,long,image_url,Category,voyager_id,airport_code
+101,Delhi,14,3,28.7041,77.1025,https://www.tourtravelogy.com/wp-content/uploads/2016/10/reddfort.jpg,Business,2820046943342890302,DEL
+102,Mumbai,12,4,19.076,72.8777,https://i.pinimg.com/originals/11/00/40/110040c9c0db08c56328cbf00ebc82e1.jpg,Business,4213513766539949483,BOM
+103,Bangalore,12,3,12.9716,77.5946,https://image3.mouthshut.com/images/Restaurant/Photo/-81988_8621.jpg,Business,6771549831164675055,BLR
+104,Bankok,26,2,13.7563,100.5018,https://wallpapercave.com/wp/wp2387116.jpg,Leisure,7638082797581905023,BKK
+105,Phuket,25,4,7.9519,98.3381,https://i.ytimg.com/vi/WQVO76h-p7Q/maxresdefault.jpg,Leisure,6583078391540379850,HKT
+106,Goa,35,2,15.2993,74.124,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShrxEpUOY5ZstlPyz4GVes2fAnFDNYilIQ3UeCR-1_1ABCejpK,Beach,8717279093827200968,GOI
+107,Jaipur,24,3,26.9124,75.7873,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4qYCt4gD_Yu-5So1Pz1DubB0xVrYu1GMga-pFLUq_n23DmHDH,Leisure,4278754392716898526,JAI
+108,Chennai,11,4,13.0827,80.2707,https://pix10.agoda.net/geo/city/17269/1_17269_02.jpg?s=1920x822,Business,4354390963378411938,MAA
+109,Jammu And Kashmir,43,2,33.7782,76.5762,https://i.ytimg.com/vi/GQKDnK-spQs/maxresdefault.jpg,Religious,4423277054610635307,IXJ
+110,Mysore,13,5,12.2958,76.6394,https://image3.mouthshut.com/images/imagesp/925753485s.jpg,Business,6237241643285427714,MYQ
+111,Colombo,24,5,6.9271,79.8612,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrvA0xcMUrSOxloWLuIVTnKi3wfL5IgkwuBJd2kO9nxkixoc74,Leisure,5192312550279495658,CMB
+112,Kochi,23,3,9.9312,76.2673,http://static.asiawebdirect.com/m/kl/portals/india-hotel-net/homepage/kochi/pagePropertiesImage/cochin.jpg.jpg,Leisure,8210666562286566619,COK
+113,Philippines,27,3,12.8797,121.774,https://sgp1.digitaloceanspaces.com/tz-mag-ph/wp-content/uploads/2017/06/20091804/palawan-island-philippines-hd-wallpaper.jpg,Leisure,7570822652572844544,CEB
+114,Shillong,50,3,25.5788,91.8933,https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRccHnku6_Juq9Mc8wORcnpaoX6JwUmjEDZF_nKVvKAvn7WOxxc5Q,Hill,5893379290811218651,SHL
+115,Haridwar,42,3,29.9457,78.1642,http://www.thegreatanannda.com/wp-content/themes/tga/assets/img/Hotel-Great-Ananda-Haridwar-harki-pauri.jpg,Religious,3545728938069300513,DEL
+116,Tirupati,41,1,13.6288,79.4192,https://i.pinimg.com/originals/28/bc/d0/28bcd0d7e9310764a99dbb27c65cdf60.jpg,Religious,18688368793823515,TIR
