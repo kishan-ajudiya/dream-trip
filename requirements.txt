@@ -7,7 +7,7 @@ Django==1.11.22
 django-cors-headers==3.0.2
 djangorestframework==3.9.4
 gunicorn==19.6.0
-html5lib==0.9999999
+html5lib==0.999999999
 idna==2.8
 Markdown==2.6.6
 Pillow==3.3.0
